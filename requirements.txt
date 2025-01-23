@@ -1,0 +1,23 @@
+torch
+torchvision
+torchaudio
+
+# TAO Toolkit
+git+https://github.com/TAO-Dataset/tao
+
+# Video processing
+imageio-ffmpeg
+
+
+# Additional dependencies
+timm
+lvis
+filterpy
+numba
+scikit-image
+scikit-learn
+numpy
+lap
+
+# PyCOCO Tools
+pycocotools
