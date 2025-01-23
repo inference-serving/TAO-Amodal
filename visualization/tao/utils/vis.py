@@ -209,7 +209,7 @@ def overlay_amodal_class_coco(image,
     if oy is None and ox is None:
         oy, ox = image.shape[:2]
         oy, ox = int(oy / 4), int(ox / 4)
-    boxes = [[int(round(y)) for y in x['amodal_bbox']] for x in annotations]
+    boxes = [[int(round(y)) for y in x['bbox']] for x in annotations]
     boxes = [[box[0]+ox, box[1]+oy, box[2], box[3]] for box in boxes]
     if background_colors is None:
         colors = [_WHITE for _ in annotations]
@@ -365,7 +365,7 @@ def overlay_amodal_boxes_coco(image,
     if oy is None and ox is None:
         oy, ox = image.shape[:2]
         oy, ox = int(oy / 4), int(ox / 4)
-    boxes = [[int(round(y)) for y in x['amodal_bbox']] for x in annotations]
+    boxes = [[int(round(y)) for y in x['bbox']] for x in annotations]
     boxes = [[box[0]+ox, box[1]+oy, box[2], box[3]] for box in boxes]
 
     sorted_inds = sorted(range(len(boxes)),

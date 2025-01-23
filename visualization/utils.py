@@ -13,34 +13,42 @@ def default_arg_parser():
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     
     # Input/Output parameters
-    parser.add_argument('--annotations', type=Path, required=True,
+    parser.add_argument('--annotations', type=Path, required=False,
+                        default='/home/cc/tao/TAO-Amodal/annotations/validation.json',
                         help='Path to TAO-Amodal annotation json.')
     parser.add_argument('--mask-annotations', type=Path, required=False,
+                        default='/home/cc/tao/TAO-Amodal/BURST_annotations/val/all_classes_visibility.json',
                         help='The path to your BURST annotation json.')
-    parser.add_argument('--output-dir', type=Path, required=True,
+    parser.add_argument('--output-dir', type=Path, required=False,
+                        default='.',
                         help='Output folder where you want to save your visualization results.')
-    parser.add_argument('--images-dir', type=Path, required=True,
+    parser.add_argument('--images-dir', type=Path, required=False,
+                        default='/home/cc/tao/TAO-Amodal/frames',
                         help=('Path to TAO-Amodal/frames. '
-                         'Make sure you download all the frames following instructions'
-                         ' at https://huggingface.co/datasets/chengyenhsieh/TAO-Amodal'
-                         ' before using the visualization script.'))
+                              'Make sure you download all the frames following instructions'
+                              ' at https://huggingface.co/datasets/chengyenhsieh/TAO-Amodal'
+                              ' before using the visualization script.'))
+    
     # Used in random quality check
-    parser.add_argument('--random-quality-check', type=parse_bool, default=False)
-    parser.add_argument('--random-quality-check-size', type=int, default=7)
+    parser.add_argument('--random-quality-check', type=parse_bool, default=False,
+                        help='Enable or disable random quality checks.')
+    parser.add_argument('--random-quality-check-size', type=int, default=1,
+                        help='Number of videos to randomly select for quality checks.')
     parser.add_argument('--split', type=str, 
+                        default='val',
                         help="train/val/test. Videos will be randomly picked from each subset in this split and visualized.")
     
     # Used in selected quality check
     parser.add_argument('--selected-quality-check', type=parse_bool, default=False,
                         help='If True, we select videos with more heavy occlusions for visualization.')
     parser.add_argument('--selected-quality-check-size', type=int, default=7)
-    parser.add_argument('--video-name', type=str, nargs='*',
+    parser.add_argument('--video-name', type=str, nargs='*', default="val/Charades/0NN7I",
                         help='If specified, only specified videos will be visualized.')
 
-    # Video settings.
+    # Video settings
     parser.add_argument('--clip-video-length', default=None, type=int, 
                         help="If this number is given, we randomly visualize a small interval of the video to control the video length.")
-    parser.add_argument('--show-image-id', default=False, type=parse_bool,
+    parser.add_argument('--show-image-id', default=True, type=parse_bool,
                         help='If True, the ```image_id``` of each frame will be displayed at \
                             the top of the video')
     parser.add_argument(
@@ -60,7 +68,7 @@ def default_arg_parser():
                         help='How much to slow down labeled frames.')
     parser.add_argument('--separator-width', default=5, type=int)
     
-    # Bounding box settings.
+    # Bounding box settings
     parser.add_argument('--show-categories', default=True, type=parse_bool,
                         help='If True, we show the category name of each track.')
     parser.add_argument('--show-visibility', default=False, type=parse_bool, 
@@ -88,21 +96,20 @@ def default_arg_parser():
     
     parser.add_argument('--use-tracks', type=parse_bool, default=True)
 
-    
     # Used in visualizing Predictions
     parser.add_argument('--predictions', type=Path, required=False, help="Path of tracker prediction results, e.g., track.json")
     parser.add_argument('--predictions2', type=Path, required=False, help="Path of second tracker prediction results, e.g., track.json")
     parser.add_argument('--score-threshold', type=float, default=0.5)
 
-
-    
     # Amodal Expander Visualization relevant hyperparameters
-    parser.add_argument('--expand-ratio', type=float, default=1.1)  # Only modal boxes whose area are enlarged by 1.1 times at least will be visualized
+    parser.add_argument('--expand-ratio', type=float, default=1.1, 
+                        help="Only modal boxes whose area are enlarged by 1.1 times at least will be visualized.")
     parser.add_argument('--workers', type=int, default=4,
                         help='Number of workers to run multi-processing.')
 
     args = parser.parse_args()
     return args
+
 
 def get_video_name(args):
     if (int(args.video_name is not None) + int(args.random_quality_check) + int(args.selected_quality_check)) > 1:
