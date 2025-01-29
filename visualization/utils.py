@@ -14,13 +14,13 @@ def default_arg_parser():
     
     # Input/Output parameters
     parser.add_argument('--annotations', type=Path, required=False,
-                        default='/home/cc/tao/TAO-Amodal/annotations/validation.json',
+                        default='/home/cc/tao/TAO-Amodal/annotations/train.json',
                         help='Path to TAO-Amodal annotation json.')
     parser.add_argument('--mask-annotations', type=Path, required=False,
-                        default='/home/cc/tao/TAO-Amodal/BURST_annotations/val/all_classes_visibility.json',
+                        default='/home/cc/tao/TAO-Amodal/BURST_annotations/train/train_visibility.json',
                         help='The path to your BURST annotation json.')
     parser.add_argument('--output-dir', type=Path, required=False,
-                        default='.',
+                        default='/home/cc/cache',
                         help='Output folder where you want to save your visualization results.')
     parser.add_argument('--images-dir', type=Path, required=False,
                         default='/home/cc/tao/TAO-Amodal/frames',
@@ -42,7 +42,7 @@ def default_arg_parser():
     parser.add_argument('--selected-quality-check', type=parse_bool, default=False,
                         help='If True, we select videos with more heavy occlusions for visualization.')
     parser.add_argument('--selected-quality-check-size', type=int, default=7)
-    parser.add_argument('--video-name', type=str, nargs='*', default="val/Charades/0NN7I",
+    parser.add_argument('--video-name', type=str, nargs='*', default="train/YFCC100M/v_8b6283255797fc7e94f3a93947a2803",
                         help='If specified, only specified videos will be visualized.')
 
     # Video settings

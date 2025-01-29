@@ -1,3 +1,0 @@
-## main...origin/main
-?? ../requirements.txt
-?? vis_amodal_mask_videos-terminal.py_Jan23-18-00-32.git-state/
